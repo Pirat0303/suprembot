@@ -4,11 +4,16 @@ const client = new Discord.Client();
 client.on('ready', () => {
     console.log('I am ready!');
 });
-
+const prefix = "!";
 client.on('message', message => {
-    if (message.content === 'ping') {
-    	message.reply('pong');
-  	}
+    if (!message.content.startsWith(prefix)) return;
+    
+    if (message.content.startsWith(prefix + "ping")) {
+    	message.channel.send("pong!");
+  	} else 
+    if (message.content.startsWith(prefix + "foo"))  {
+        message.channel.send("bar!");
+    }
 });
     
 client.on('message', message => {
@@ -32,6 +37,24 @@ client.on('message', message => {
       message.reply('You didn\'t mention the user to kick!');
     }
   }
+});
+client.on('message', message => {
+  // If the message is "how to embed"
+  if (message.content === 'how to embed') {
+    // We can create embeds using the MessageEmbed constructor
+    // Read more about all that you can do with the constructor
+    // over at https://discord.js.org/#/docs/main/stable/class/RichEmbed
+    const embed = new RichEmbed()
+      .setTitle('A slick little embed')
+      .setColor(0xFF0000)
+      .setDescription('Hello, this is a slick embed!');
+    message.channel.send(embed);
+  }
+});
+client.on('guildMemberAdd', member => {
+  const channel = member.guild.channels.find(ch => ch.name === 'member-log');
+  if (!channel) return;
+  channel.send(`Welcome to the server, ${member}`);
 });
 
 // THIS  MUST  BE  THIS  WAY
