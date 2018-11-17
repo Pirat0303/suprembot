@@ -4,6 +4,7 @@ const client = new Discord.Client();
 client.on('ready', () => {
     console.log('I am ready!');
 });
+
 const prefix = "!";
 client.on('message', message => {
     if (!message.content.startsWith(prefix)) return;
@@ -38,6 +39,7 @@ client.on('message', message => {
     }
   }
 });
+
 client.on('message', message => {
   // If the message is "how to embed"
   if (message.content === 'how to embed') {
